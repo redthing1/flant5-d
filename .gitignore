@@ -14,3 +14,4 @@ flant5-d-test-*
 *.o
 *.obj
 *.lst
+*.a
