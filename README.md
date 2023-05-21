@@ -1,12 +1,18 @@
 # flant5-d
 
-FLAN-T5 bindings for D via CTranslate2 + sentencepiece
+optimized inference of [FLAN-T5] models in D
+
++ can run any huggingface [T5](https://huggingface.co/transformers/model_doc/t5.html) family model (including FlanT5, T0, etc.)
+
+powered by [CTranslate2](https://github.com/OpenNMT/CTranslate2) and [sentencepiece](https://github.com/google/sentencepiece)
 
 ## usage
 
 ### models
 
-obtain a model that is in the CTranslate2 (ct2) format. see the [model conversion](https://opennmt.net/CTranslate2/conversion.html) documentation for specific instructions.
+obtain a model that is in the CTranslate2 (ct2) format. see the [ctranslate2 model conversion](https://opennmt.net/CTranslate2/conversion.html) documentation for specific instructions.
+
+for cpu reference, `int8` quantization is recommended for best performance and memory usage.
 
 assuming you have a model in the ct2 format, you can use it like so:
 
