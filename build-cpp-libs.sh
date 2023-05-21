@@ -7,58 +7,65 @@
 
 set -e
 
-HOST="bert-d"
-LIB_NAME="bert"
-SOURCETREE_URL="https://github.com/skeskinen/bert.cpp"
-SOURCETREE_DIR="bertcpp_source"
-SOURCETREE_BRANCH="cd2170ded1f4d245080874836e75b09972737089"
-LIB_FILE_1="libbert.a"
-LIB_FILE_2="libggml.a"
+HOST="flant5-d"
+LIB_FILE_1="libctranslate2.so"
+LIB_FILE_2="libsentencepiece.a"
 
 PACKAGE_DIR=$(dirname "$0")
 cd "$PACKAGE_DIR"
 pushd .
-# if [ ! -f $LIB_FILE_1 ] || [ "$1" == "-f" ]; then
 if [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1" == "-f" ]; then
-    echo "[$HOST] building $LIB_NAME library..."
+    echo "[$HOST] building CTranslate2 library..."
 
-    # delete $SOURCETREE_DIR to force re-fetch source
-    if [ -d $SOURCETREE_DIR ] 
-    then
-        echo "[$HOST] source folder already exists, using it." 
-    else
-        echo "[$HOST] getting source to build $LIB_NAME" 
-        # git clone $SOURCETREE_URL $SOURCETREE_DIR
-        git clone --depth 1 --branch $SOURCETREE_BRANCH $SOURCETREE_URL $SOURCETREE_DIR
-    fi
-
-    cd $SOURCETREE_DIR
-    git checkout $SOURCETREE_BRANCH
+    pushd lib/CTranslate2
     git submodule update --init --recursive
 
-    echo "[$HOST] starting build of $LIB_NAME" 
+    echo "[$HOST] starting build of CTranslate2" 
     #
     # START BUILD
     #
     # build the library
     pushd .
-    mkdir -p build
-    cd build
-    cmake .. -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release
+    mkdir -p build && cd build
+    cmake .. -DBUILD_SHARED_LIBS=ON -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=Release
     make -j
     popd
     #
     # END BUILD
     #
 
-    echo "[$HOST] finished build of $LIB_NAME" 
+    echo "[$HOST] finished build of CTranslate2"
 
-    echo "[$HOST] copying $LIB_NAME binary ($LIB_FILE_1) to $PACKAGE_DIR"
+    echo "[$HOST] copying CTranslate2 binary ($LIB_FILE_1) to $PACKAGE_DIR"
     cp -v $(pwd)/build/$LIB_FILE_1 $PACKAGE_DIR/$LIB_FILE_1
-    echo "[$HOST] copying $LIB_NAME binary ($LIB_FILE_2) to $PACKAGE_DIR"
-    cp -v $(pwd)/build/ggml/src/$LIB_FILE_2 $PACKAGE_DIR/$LIB_FILE_2
+    popd
+
+    echo "[$HOST] building SentencePiece library..."
+
+    pushd lib/sentencepiece
+    git submodule update --init --recursive
+
+    echo "[$HOST] starting build of SentencePiece" 
+    #
+    # START BUILD
+    #
+    # build the library
+    pushd .
+    mkdir -p build && cd build
+    cmake .. -DSPM_ENABLE_SHARED=OFF -DCMAKE_BUILD_TYPE=Release
+    make -j
+    popd
+    #
+    # END BUILD
+    #
+
+    echo "[$HOST] finished build of SentencePiece"
+
+    echo "[$HOST] copying SentencePiece binary ($LIB_FILE_2) to $PACKAGE_DIR"
+    cp -v $(pwd)/build/src/$LIB_FILE_2 $PACKAGE_DIR/$LIB_FILE_2
     popd
 else
     # delete $LIB_FILE_1 to force rebuild
     echo "[$HOST] library $LIB_NAME already built."
 fi
+popd
