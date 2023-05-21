@@ -29,6 +29,21 @@ struct GenerationParams {
   float sampling_temperature = 1;
 };
 
+typedef void *CT2Generator;
+
+// create a generator, loading the specified model and tokenizer
+VIS_PUBLIC CT2Generator ct2_generator_create(const char *model_path,
+                                             const char *tokenizer_path);
+// close and free a generator
+VIS_PUBLIC void ct2_generator_destroy(CT2Generator generator);
+
+// execute generator to create one output sequence from one input sequence
+VIS_PUBLIC void ct2_generator_generate_one_str(CT2Generator generator,
+                                           const char *input, char *output,
+                                           size_t max_output_length,
+                                           size_t *output_length,
+                                           const GenerationParams *params);
+
 #ifdef __cplusplus
 }
 #endif
