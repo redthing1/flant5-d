@@ -15,3 +15,4 @@ flant5-d-test-*
 *.obj
 *.lst
 *.a
+.vscode
