@@ -1,0 +1,12 @@
+name "flant5-d"
+description "FLAN-T5 bindings for D via CTranslate2 + sentencepiece"
+authors "redthing1"
+copyright "Copyright © 2023, redthing1"
+license "proprietary"
+targetType "library"
+
+configuration "default" {
+    # on posix platforms, link to staticlibrary
+    lflags "-L$PACKAGE_DIR" "$PACKAGE_DIR/libidk.a" "-lstdc++" platform="posix"
+    preGenerateCommands "bash $PACKAGE_DIR/build-cpp-libs.sh" platform="posix"
+}

@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/flant5-d
+flant5-d.so
+flant5-d.dylib
+flant5-d.dll
+flant5-d.a
+flant5-d.lib
+flant5-d-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
