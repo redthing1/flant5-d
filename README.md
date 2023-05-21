@@ -6,6 +6,8 @@ optimized inference of [FLAN-T5] models in D
 
 powered by [CTranslate2](https://github.com/OpenNMT/CTranslate2) and [sentencepiece](https://github.com/google/sentencepiece)
 
+⚠️ currently there is an [issue](https://github.com/OpenNMT/CTranslate2/issues/1196) with the static library build of CTranslate2, so you will need to copy `$PACKAGE_DIR/libctranslate2.so` from this project when built to `libctranslate2.so.3` next to your binary. this will be fixed when the issue is resolved.
+
 ## usage
 
 ### models
