@@ -133,3 +133,21 @@ void ct2_generator_generate_one_str(CT2Generator generator, const char *input,
 
   *output_length = output_str.size();
 }
+
+GenerationParams ct2_generator_default_params() {
+  GenerationParams params;
+  params.beam_size = 2;
+  params.patience = 1;
+  params.length_penalty = 1;
+  params.coverage_penalty = 0;
+  params.repetition_penalty = 1;
+  params.no_repeat_ngram_size = 0;
+  params.disable_unk = false;
+  params.return_end_token = false;
+  params.max_input_length = 1024;
+  params.max_decoding_length = 256;
+  params.min_decoding_length = 1;
+  params.sampling_topk = 1;
+  params.sampling_temperature = 1;
+  return params;
+}

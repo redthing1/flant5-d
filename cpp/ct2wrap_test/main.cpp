@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
   size_t output_length;
   constexpr size_t max_output_length = 8192;
   char output[max_output_length];
-  GenerationParams params;
+  GenerationParams params = ct2_generator_default_params();
   params.sampling_temperature = 0.7;
   params.sampling_topk = 10;
   params.max_input_length = 1024;
