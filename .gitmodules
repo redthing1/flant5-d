@@ -1,0 +1,6 @@
+[submodule "lib/sentencepiece"]
+	path = lib/sentencepiece
+	url = https://github.com/google/sentencepiece
+[submodule "lib/CTranslate2"]
+	path = lib/CTranslate2
+	url = https://github.com/OpenNMT/CTranslate2
