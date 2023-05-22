@@ -43,7 +43,7 @@ if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1
     echo "[$HOST] copying ct2wrap binary ($LIB_FILE_0) to $PACKAGE_DIR"
     cp -v $(pwd)/build/$LIB_FILE_0 $PACKAGE_DIR/$LIB_FILE_0
     echo "[$HOST] copying CTranslate2 binary ($LIB_FILE_1) to $PACKAGE_DIR"
-    cp -v $(pwd)/build/ctranslate2/$LIB_FILE_1 $PACKAGE_DIR/$LIB_FILE_1
+    cp -v $(pwd)/build/CTranslate2/$LIB_FILE_1 $PACKAGE_DIR/$LIB_FILE_1
     echo "[$HOST] copying sentencepiece binary ($LIB_FILE_2) to $PACKAGE_DIR"
     cp -v $(pwd)/build/sentencepiece/src/$LIB_FILE_2 $PACKAGE_DIR/$LIB_FILE_2
     popd
