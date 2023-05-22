@@ -7,6 +7,6 @@ targetType "library"
 
 configuration "default" {
     # on posix platforms, link to staticlibrary
-    lflags "-L$PACKAGE_DIR" "$PACKAGE_DIR/libct2wrap.a" "$PACKAGE_DIR/libctranslate2.so" "$PACKAGE_DIR/libsentencepiece.a" "-lstdc++" platform="posix"
+    lflags "-L$PACKAGE_DIR" "$PACKAGE_DIR/libct2wrap.a" "$PACKAGE_DIR/libctranslate2.a" "$PACKAGE_DIR/libsentencepiece.a" "-lstdc++" "-lgomp" "-lcblas" platform="posix"
     preGenerateCommands "bash $PACKAGE_DIR/build-cpp-libs.sh" platform="posix"
 }
