@@ -31,7 +31,7 @@ if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1
     # build the library
     pushd .
     mkdir -p build && cd build
-    cmake .. -DBUILD_SHARED_LIBS=OFF -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    cmake .. -DBUILD_SHARED_LIBS=ON -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=RelWithDebInfo
     make -j${PARALLEL}
     popd
     #
