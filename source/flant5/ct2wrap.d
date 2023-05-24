@@ -27,6 +27,41 @@ struct GenerationParams {
     size_t min_decoding_length;
     size_t sampling_topk;
     float sampling_temperature;
+
+    string toString() const {
+        import std.format;
+
+        return format(
+            "GenerationParams("
+            ~ "beam_size: %s, "
+            ~ "patience: %s, "
+            ~ "length_penalty: %s, "
+            ~ "coverage_penalty: %s, "
+            ~ "repetition_penalty: %s, "
+            ~ "no_repeat_ngram_size: %s, "
+            ~ "disable_unk: %s, "
+            ~ "return_end_token: %s, "
+            ~ "max_input_length: %s, "
+            ~ "max_decoding_length: %s, "
+            ~ "min_decoding_length: %s, "
+            ~ "sampling_topk: %s, "
+            ~ "sampling_temperature: %s)"
+            ~ ")",
+            beam_size,
+            patience,
+            length_penalty,
+            coverage_penalty,
+            repetition_penalty,
+            no_repeat_ngram_size,
+            disable_unk,
+            return_end_token,
+            max_input_length,
+            max_decoding_length,
+            min_decoding_length,
+            sampling_topk,
+            sampling_temperature
+        );
+    }
 }
 
 alias CT2Generator = void*;
