@@ -10,4 +10,5 @@ configuration "default" {
     lflags "-L$PACKAGE_DIR" "$PACKAGE_DIR/libct2wrap.a" "$PACKAGE_DIR/libctranslate2.so" "$PACKAGE_DIR/libsentencepiece.a" "-lstdc++" "-lcblas" platform="posix"
     // lflags "-L$PACKAGE_DIR" "$PACKAGE_DIR/libct2wrap.a" "$PACKAGE_DIR/libctranslate2.a" "$PACKAGE_DIR/libsentencepiece.a" "$PACKAGE_DIR/libcpu_features.a" "-lstdc++" "-lgomp" "-lcblas" "-llapack" "-lm" platform="posix"
     preGenerateCommands "bash $PACKAGE_DIR/build-cpp-libs.sh" platform="posix"
+    preBuildCommands "cp $PACKAGE_DIR/libctranslate2.so $ROOT_PACKAGE_DIR/libctranslate2.so.3"
 }
