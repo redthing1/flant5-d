@@ -4,3 +4,6 @@ authors "no"
 copyright "Copyright © 2023, no"
 license "proprietary"
 dependency "flant5-d" path=".."
+
+# add rpath origin on posix
+lflags "-rpath=$$ORIGIN"
