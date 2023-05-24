@@ -10,8 +10,8 @@ set -x
 
 HOST="flant5-d"
 LIB_FILE_0="libct2wrap.a"
-# LIB_FILE_1="libctranslate2.so"
-LIB_FILE_1="libctranslate2.a"
+LIB_FILE_1="libctranslate2.so"
+# LIB_FILE_1="libctranslate2.a"
 LIB_FILE_2="libsentencepiece.a"
 
 PARALLEL=${PARALLEL:-$(nproc)}
@@ -32,8 +32,8 @@ if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1
     # build the library
     pushd .
     mkdir -p build && cd build
-    # cmake .. -DBUILD_SHARED_LIBS=ON -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=RelWithDebInfo
-    cmake .. -DBUILD_SHARED_LIBS=OFF -DWITH_MKL=OFF -DWITH_OPENBLAS=OFF -DWITH_RUY=ON -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    cmake .. -DBUILD_SHARED_LIBS=ON -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    # cmake .. -DBUILD_SHARED_LIBS=OFF -DWITH_MKL=OFF -DWITH_OPENBLAS=OFF -DWITH_RUY=ON -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=RelWithDebInfo
     make -j${PARALLEL}
     popd
     #
