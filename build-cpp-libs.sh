@@ -10,17 +10,18 @@ set -x
 
 HOST="flant5-d"
 LIB_FILE_0="libct2wrap.a"
-# LIB_FILE_1="libctranslate2.so"
-LIB_FILE_1="libctranslate2.a"
+LIB_FILE_1="libctranslate2.so"
+# LIB_FILE_1="libctranslate2.a"
 LIB_FILE_2="libsentencepiece.a"
-LIB_FILE_3="libcpu_features.a"
+# LIB_FILE_3="libcpu_features.a"
 
 PARALLEL=${PARALLEL:-$(nproc)}
 
 PACKAGE_DIR=$(dirname "$0")
 cd "$PACKAGE_DIR"
 pushd .
-if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ ! -f $LIB_FILE_3 ] || [ "$1" == "-f" ]; then
+if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1" == "-f" ]; then
+# if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ ! -f $LIB_FILE_3 ] || [ "$1" == "-f" ]; then
     echo "[$HOST] building ct2wrap library..."
     git submodule update --init --recursive
 
@@ -33,8 +34,8 @@ if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ ! -
     # build the library
     pushd .
     mkdir -p build && cd build
-    # cmake .. -DBUILD_SHARED_LIBS=ON -DWITH_MKL=OFF -DWITH_DNNL=ON -DWITH_OPENBLAS=ON -DCUDA_DYNAMIC_LOADING=ON -DOPENMP_RUNTIME=COMP -DCMAKE_BUILD_TYPE=RelWithDebInfo
-    cmake .. -DBUILD_SHARED_LIBS=OFF -DWITH_MKL=OFF -DWITH_OPENBLAS=ON -DWITH_RUY=OFF -DOPENMP_RUNTIME=COMP -DBUILD_CLI=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    cmake .. -DBUILD_SHARED_LIBS=ON -DWITH_MKL=OFF -DWITH_OPENBLAS=ON -DOPENMP_RUNTIME=COMP -DBUILD_CLI=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    # cmake .. -DBUILD_SHARED_LIBS=OFF -DWITH_MKL=OFF -DWITH_OPENBLAS=ON -DWITH_RUY=OFF -DOPENMP_RUNTIME=COMP -DBUILD_CLI=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo
     make -j${PARALLEL}
     popd
     #
@@ -49,8 +50,8 @@ if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ ! -
     cp -v $(pwd)/build/ctranslate2/$LIB_FILE_1 $PACKAGE_DIR/$LIB_FILE_1
     echo "[$HOST] copying sentencepiece binary ($LIB_FILE_2) to $PACKAGE_DIR"
     cp -v $(pwd)/build/sentencepiece/src/$LIB_FILE_2 $PACKAGE_DIR/$LIB_FILE_2
-    echo "[$HOST] copying cpu_features binary ($LIB_FILE_3) to $PACKAGE_DIR"
-    cp -v $(pwd)/build/ctranslate2/third_party/cpu_features/$LIB_FILE_3 $PACKAGE_DIR/$LIB_FILE_3
+    # echo "[$HOST] copying cpu_features binary ($LIB_FILE_3) to $PACKAGE_DIR"
+    # cp -v $(pwd)/build/ctranslate2/third_party/cpu_features/$LIB_FILE_3 $PACKAGE_DIR/$LIB_FILE_3
     popd
 else
     # delete $LIB_FILE_1 to force rebuild
