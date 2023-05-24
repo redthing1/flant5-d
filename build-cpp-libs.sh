@@ -29,9 +29,9 @@ if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1
     if [ ! -d ".git" ]; then
         # git does not exist, so we need to clone the submodules directly
         echo "[$HOST] cloning submodules..."
-        [ ! -d 'lib/sentencepiece' ] && git clone https://github.com/google/sentencepiece lib/sentencepiece
+        [ ! -d 'lib/sentencepiece/.git' ] && git clone https://github.com/google/sentencepiece lib/sentencepiece
         (cd lib/sentencepiece && git checkout v0.1.99 && git submodule update --init --recursive)
-        [ ! -d 'lib/CTranslate2' ] && git clone https://github.com/OpenNMT/CTranslate2 lib/CTranslate2
+        [ ! -d 'lib/CTranslate2/.git' ] && git clone https://github.com/OpenNMT/CTranslate2 lib/CTranslate2
         (cd lib/CTranslate2 && git checkout 5e71cb3f669521de7aaad2d1845a9cee1389a6df && git submodule update --init --recursive)
     else
         # git exists, so we can use submodule
