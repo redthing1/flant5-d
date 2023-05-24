@@ -40,5 +40,6 @@ void ct2_generator_generate_one_str(
     char* output,
     size_t max_output_length,
     size_t* output_length,
-    const(GenerationParams)* params);
+    const(GenerationParams)* params,
+    bool add_sequence_end_token);
 GenerationParams ct2_generator_default_params();

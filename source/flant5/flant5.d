@@ -27,7 +27,7 @@ struct FlanT5Generator {
         _generator = ct2_generator_create(model_path.toStringz, tokenizer_file_path.toStringz);
     }
 
-    string generate(string prompt, FlanT5GenerationParams params = default_gen_params) {
+    string generate(string prompt, FlanT5GenerationParams params = default_gen_params, bool add_sequence_end_token = true) {
         enforce(_generator !is null, "model not loaded");
 
         char[] output_buffer;
@@ -40,7 +40,8 @@ struct FlanT5Generator {
             output_buffer.ptr,
             max_output_length,
             &output_length,
-            &params
+            &params,
+            add_sequence_end_token
         );
         output_buffer.length = output_length;
 

@@ -77,7 +77,8 @@ void ct2_generator_destroy(CT2Generator generator) {
 void ct2_generator_generate_one_str(CT2Generator generator, const char *input,
                                     char *output, size_t max_output_length,
                                     size_t *output_length,
-                                    const GenerationParams *params) {
+                                    const GenerationParams *params,
+                                    bool add_sequence_end_token) {
   // 1. convert generation params to ctranslate2::TranslationOptions
   ctranslate2::TranslationOptions ct2_options;
   ct2_options.beam_size = params->beam_size;
@@ -99,6 +100,9 @@ void ct2_generator_generate_one_str(CT2Generator generator, const char *input,
   // 2. tokenize input
   //   std::cout << "input str: " << input << std::endl;
   auto input_tokens = cxx_generator->tokenize_str(input);
+  if (add_sequence_end_token) {
+    input_tokens.push_back("</s>");
+  }
   //   std::cout << "input tokens: ";
   //   for (auto token : input_tokens) {
   //     std::cout << token << ", ";

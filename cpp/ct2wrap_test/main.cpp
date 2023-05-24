@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
   params.max_decoding_length = 150;
   params.repetition_penalty = 1.1;
   ct2_generator_generate_one_str(generator, input, output, max_output_length,
-                                 &output_length, &params);
+                                 &output_length, &params, true);
   std::cout << "ct2wrap_test: generated output: " << output << std::endl;
 
   // clean up
