@@ -23,7 +23,21 @@ pushd .
 if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1" == "-f" ]; then
 # if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ ! -f $LIB_FILE_3 ] || [ "$1" == "-f" ]; then
     echo "[$HOST] building ct2wrap library..."
-    git submodule update --init --recursive
+    
+    # git submodule update --init --recursive
+    # check if .git exists (to see if we can use submodule)
+    if [ ! -d ".git" ]; then
+        # git does not exist, so we need to clone the submodules directly
+        echo "[$HOST] cloning submodules..."
+        git clone https://github.com/google/sentencepiece lib/sentencepiece
+        pushd lib/sentencepiece && git checkout v0.1.99 && popd
+        git clone https://github.com/OpenNMT/CTranslate2 lib/CTranslate2
+        pushd lib/CTranslate2 && git checkout cb228834390ad6f29864d0c205be49d144fa1dae && popd
+    else
+        # git exists, so we can use submodule
+        echo "[$HOST] updating submodules..."
+        git submodule update --init --recursive
+    fi
 
     pushd cpp/ct2wrap
 
