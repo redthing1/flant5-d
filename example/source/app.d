@@ -51,7 +51,7 @@ int main(string[] args) {
 	gen_params.max_decoding_length = 150;
 	gen_params.repetition_penalty = 1.1;
 	writefln("gen_params: %s", gen_params);
-	auto test_output = gen.generate(test_input);
+	auto test_output = gen.generate(test_input).replace("▁", " ");
 
 	writefln("output: %s", test_output);
 
