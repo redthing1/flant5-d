@@ -8,8 +8,11 @@ import flant5;
 
 struct Options {
 	string model;
+	string prompt_str;
 	string prompt_file;
-	float temp = 0.7;
+	int num_beams = 5;
+	float temp = 1.0;
+	int topk = 1;
 }
 
 int main(string[] args) {
@@ -17,8 +20,11 @@ int main(string[] args) {
 
 	auto help_info = getopt(args,
 		"m", &cli_options.model,
-		"p", &cli_options.prompt_file,
-		"t", &cli_options.temp
+		"p", &cli_options.prompt_str,
+		"f", &cli_options.prompt_file,
+		"num-beams", &cli_options.num_beams,
+		"temp", &cli_options.temp,
+		"topk", &cli_options.topk,
 	);
 	if (help_info.helpWanted) {
 		defaultGetoptPrinter("flant5-d example", help_info.options);
@@ -29,8 +35,8 @@ int main(string[] args) {
 		writeln("model file is required");
 		return 1;
 	}
-	if (cli_options.prompt_file.empty) {
-		writeln("prompt file is required");
+	if (cli_options.prompt_str.empty && cli_options.prompt_file.empty) {
+		writeln("either prompt_str or prompt_file is required");
 		return 1;
 	}
 
@@ -39,19 +45,23 @@ int main(string[] args) {
 	writefln("loading model: %s", cli_options.model);
 	gen.load_model(cli_options.model);
 
-	string test_input = std.file.readText(cli_options.prompt_file);
+	string prompt;
+	if (!cli_options.prompt_str.empty) {
+		prompt = cli_options.prompt_str;
+	} else {
+		prompt = std.file.readText(cli_options.prompt_file);
+	}
 
-	writefln("input: %s", test_input);
-	writefln("generating...");
+	writefln("input: %s", prompt);
+
 	auto gen_params = gen.default_gen_params;
-	gen_params.beam_size = 5;
+	gen_params.beam_size = cli_options.num_beams;
 	gen_params.sampling_temperature = cli_options.temp;
-	gen_params.sampling_topk = 10;
-	gen_params.max_input_length = 1024;
-	gen_params.max_decoding_length = 150;
-	gen_params.repetition_penalty = 1.1;
+	gen_params.sampling_topk = cli_options.topk;
 	writefln("gen_params: %s", gen_params);
-	auto test_output = gen.generate(test_input).replace("▁", " ");
+
+	writefln("generating...");
+	auto test_output = gen.generate(prompt).replace("▁", " ");
 
 	writefln("output: %s", test_output);
 
