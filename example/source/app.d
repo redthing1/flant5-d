@@ -61,7 +61,7 @@ int main(string[] args) {
 	writefln("gen_params: %s", gen_params);
 
 	writefln("generating...");
-	auto test_output = gen.generate(prompt).replace("▁", " ");
+	auto test_output = gen.generate(prompt, gen_params).replace("▁", " ");
 
 	writefln("output: %s", test_output);
 
