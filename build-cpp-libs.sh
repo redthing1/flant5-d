@@ -69,6 +69,6 @@ if [ ! -f $LIB_FILE_0 ] || [ ! -f $LIB_FILE_1 ] || [ ! -f $LIB_FILE_2 ] || [ "$1
     popd
 else
     # delete $LIB_FILE_1 to force rebuild
-    echo "[$HOST] library $LIB_NAME already built."
+    echo "[$HOST] libraries already built."
 fi
 popd
