@@ -48,9 +48,15 @@ struct FlanT5Generator {
         return output_buffer.to!string;
     }
 
-    ~this() {
+    bool destroy() {
         if (_generator !is null) {
             ct2_generator_destroy(_generator);
+            return true;
         }
+        return false;
+    }
+
+    ~this() {
+        destroy();
     }
 }
